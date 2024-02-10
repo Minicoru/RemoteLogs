@@ -39,7 +39,7 @@ app.get('/download-logs', (req, res) => {
        params.push(req.query.username);
    }
    if (req.query.env) {
-       conditions.push(`env = ?`);
+       conditions.push(`env_instance = ?`);
        params.push(req.query.env);
    }
 
