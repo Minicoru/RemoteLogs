@@ -3,7 +3,9 @@ const app = express();
 const db = require('./database'); // Ensure you have this file set up for database operations
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const cors = require("cors");
 
+app.use(cors());
 app.use(express.json());
 
 // Define all your routes here, e.g., app.post('/log', ...)
@@ -31,31 +33,31 @@ app.get('/download-logs', (req, res) => {
 
    // Collect conditions based on provided query parameters
    if (req.query.project) {
-       conditions.push(`project = ?`);
-       params.push(req.query.project);
+      conditions.push(`project = ?`);
+      params.push(req.query.project);
    }
    if (req.query.username) {
-       conditions.push(`username = ?`);
-       params.push(req.query.username);
+      conditions.push(`username = ?`);
+      params.push(req.query.username);
    }
    if (req.query.env) {
-       conditions.push(`env_instance = ?`);
-       params.push(req.query.env);
+      conditions.push(`env_instance = ?`);
+      params.push(req.query.env);
    }
 
    // Append conditions to the query if any
    if (conditions.length > 0) {
-       query += ` WHERE ` + conditions.join(' AND ');
+      query += ` WHERE ` + conditions.join(' AND ');
    }
 
    db.all(query, params, (err, rows) => {
-       if (err) {
-           console.error('Failed to retrieve logs:', err.message);
-           return res.status(500).send('Failed to retrieve logs.');
-       }
-       res.setHeader('Content-Type', 'application/json');
-       res.setHeader('Content-Disposition', 'attachment; filename=logs.json');
-       res.send(JSON.stringify(rows, null, 2));
+      if (err) {
+         console.error('Failed to retrieve logs:', err.message);
+         return res.status(500).send('Failed to retrieve logs.');
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Content-Disposition', 'attachment; filename=logs.json');
+      res.send(JSON.stringify(rows, null, 2));
    });
 });
 
