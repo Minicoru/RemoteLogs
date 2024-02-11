@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const app = express();
 const db = require('./database'); // Ensure you have this file set up for database operations
 const multer = require('multer');
@@ -11,7 +12,7 @@ app.use(express.json());
 // Define all your routes here, e.g., app.post('/log', ...)
 // Make sure not to include app.listen() in this file
 // Modified POST route to save logs to the database
-app.post('/log', (req, res) => {
+router.post('/log', (req, res) => {
    const { log, project, userdata, username, env } = req.body; // Extract log and project from the request body
    const query = `INSERT INTO log_entries (log,project,userdata,username,env_instance) VALUES (?,?,?,?,?)`;
 
@@ -26,7 +27,7 @@ app.post('/log', (req, res) => {
 });
 
 // GET route to download logs
-app.get('/download-logs', (req, res) => {
+router.get('/download-logs', (req, res) => {
    let query = `SELECT * FROM log_entries`;
    const params = [];
    let conditions = [];
@@ -63,7 +64,7 @@ app.get('/download-logs', (req, res) => {
 
 
 
-app.get('/download-database', (req, res) => {
+router.get('/download-database', (req, res) => {
    res.download('./logs.db', 'backup.db', (err) => {
       if (err) {
          console.error('Failed to download the database:', err);
@@ -73,7 +74,7 @@ app.get('/download-database', (req, res) => {
 });
 
 // Endpoint to upload and restore the database from a backup
-app.post('/upload-database', upload.single('database'), (req, res) => {
+router.post('/upload-database', upload.single('database'), (req, res) => {
    if (!req.file) {
       return res.status(400).send('No file uploaded.');
    }
@@ -91,6 +92,8 @@ app.post('/upload-database', upload.single('database'), (req, res) => {
       res.send('Database uploaded and restored successfully.');
    });
 });
+
+app.use(router);
 
 
 module.exports = app; // Export the app for use in other files
