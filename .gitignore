@@ -1,6 +1,9 @@
 # Dependency directories
 node_modules/
 
+# Local databases SQLite3
+*.db
+
 # Environment configuration files
 .env
 .env.local
