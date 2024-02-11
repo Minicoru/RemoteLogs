@@ -1,7 +1,9 @@
 const app = require('./app'); // Import the Express application
 const port = process.env.PORT || 3000;
 
-const server = app.listen(port, () => {
+const server = app;
+
+server.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
