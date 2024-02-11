@@ -7,6 +7,7 @@ const upload = multer({ dest: 'uploads/' });
 const cors = require("cors");
 const fs = require("fs");
 
+// Middlewares implemented to Express
 app.use(cors());
 app.use(express.json());
 
@@ -64,7 +65,7 @@ router.get('/download-logs', (req, res) => {
 });
 
 
-
+// Endpoint to download and backup the database from the server
 router.get('/download-database', (req, res) => {
    res.download('./logs.db', 'backup.db', (err) => {
       if (err) {
