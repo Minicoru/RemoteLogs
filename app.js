@@ -5,6 +5,7 @@ const db = require('./database'); // Ensure you have this file set up for databa
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const cors = require("cors");
+const fs = require("fs");
 
 app.use(cors());
 app.use(express.json());
@@ -91,6 +92,10 @@ router.post('/upload-database', upload.single('database'), (req, res) => {
 
       res.send('Database uploaded and restored successfully.');
    });
+});
+
+router.get('/', (req, res) => {
+   res.sendFile(__dirname + '/layouts/static/home.html'); // Make sure the path matches where your HTML file is located
 });
 
 app.use(router);
