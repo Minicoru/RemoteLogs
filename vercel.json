@@ -10,22 +10,22 @@
     {
       "src": "/log",
       "methods": ["POST"],
-      "dest": "/index.js"
+      "dest": "/server.js"
     },
     {
       "src": "/download-logs",
       "methods": ["GET"],
-      "dest": "/index.js"
+      "dest": "/server.js"
     },
     {
       "src": "/download-database",
       "methods": ["GET"],
-      "dest": "/index.js"
+      "dest": "/server.js"
     },
     {
       "src": "/upload-database",
       "methods": ["POST"],
-      "dest": "/index.js"
+      "dest": "/server.js"
     }
   ],
   "env": {
