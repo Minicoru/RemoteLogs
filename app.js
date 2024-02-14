@@ -3,8 +3,8 @@ const router = express.Router();
 const app = express();
 // const db = require('./database'); // Ensure you have this file set up for database operations
 const pool = require('./database'); // Adjusted for PostgreSQL connection
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+// const multer = require('multer');
+// const upload = multer({ dest: 'uploads/' });
 const cors = require("cors");
 const fs = require("fs");
 
