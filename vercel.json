@@ -16,7 +16,7 @@
       "src": "/download-logs",
       "methods": ["GET"],
       "dest": "/server.js"
-    }s
+    }
   ],
   "env": {
     "NODE_ENV": "production"
