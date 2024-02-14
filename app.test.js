@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('./app'); // Ensure your Express app is exported from `app.js`
+const { app, pool } = require('./app'); // Ensure your Express app is exported from `app.js`
 let server;
 
 beforeAll(() => {
@@ -8,6 +8,7 @@ beforeAll(() => {
 });
 
 afterAll((done) => {
+  (async () => { await pool.end() })();
   server.close(done); // Ensure the server is closed after tests
 });
 
@@ -31,24 +32,26 @@ describe('API tests', () => {
     // Further checks can include inspecting the response body for expected log content
   });
 
-  it('GET /download-database - should download the database file', async () => {
-    const response = await request(app).get('/download-database');
-    expect(response.statusCode).toBe(200);
-    expect(response.headers['content-type']).toBe('application/octet-stream');
-    // Note: Actual file content verification may require reading the file, which might be complex in this context
-  });
+  // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
+  // it('GET /download-database - should download the database file', async () => {
+  //   const response = await request(app).get('/download-database');
+  //   expect(response.statusCode).toBe(200);
+  //   expect(response.headers['content-type']).toBe('application/octet-stream');
+  //   // Note: Actual file content verification may require reading the file, which might be complex in this context
+  // });
 
-  it('POST /upload-database - should upload and restore the database', async () => {
-    // For this test, you'll need a path to a valid SQLite database file
-    const testDbPath = './backup.db'; // Ensure this is a valid path for testing
-    const response = await request(app)
-      .post('/upload-database')
-      .attach('database', testDbPath);
+  // it('POST /upload-database - should upload and restore the database', async () => {
+  //   // For this test, you'll need a path to a valid SQLite database file
+  //   const testDbPath = './backup.db'; // Ensure this is a valid path for testing
+  //   const response = await request(app)
+  //     .post('/upload-database')
+  //     .attach('database', testDbPath);
 
-    expect(response.statusCode).toBe(200);
-    expect(response.text).toContain('Database uploaded and restored successfully');
-    // Additional verification can include querying the database to ensure it contains the expected data
-  });
+  //   expect(response.statusCode).toBe(200);
+  //   expect(response.text).toContain('Database uploaded and restored successfully');
+  //   // Additional verification can include querying the database to ensure it contains the expected data
+  // });
+  // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
 
   it('should display the home page with GitHub link', async () => {
     const response = await request(app).get('/');

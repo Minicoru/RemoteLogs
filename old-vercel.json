@@ -16,7 +16,17 @@
       "src": "/download-logs",
       "methods": ["GET"],
       "dest": "/server.js"
-    }s
+    },
+    {
+      "src": "/download-database",
+      "methods": ["GET"],
+      "dest": "/server.js"
+    },
+    {
+      "src": "/upload-database",
+      "methods": ["POST"],
+      "dest": "/server.js"
+    }
   ],
   "env": {
     "NODE_ENV": "production"

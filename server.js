@@ -1,4 +1,6 @@
-const app = require('./app'); // Import the Express application
+require('dotenv').config();
+console.log(process.env);
+const { app, pool } = require('./app'); // Import the Express application
 const port = process.env.PORT || 3000;
 
 const server = app;
