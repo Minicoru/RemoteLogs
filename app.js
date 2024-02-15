@@ -9,8 +9,8 @@ const cors = require("cors");
 const fs = require("fs");
 
 // Middlewares implemented to Express
-app.use(cors());
-app.use(express.json());
+router.use(cors());
+router.use(express.json());
 
 // Define all your routes here, e.g., app.post('/log', ...)
 // Make sure not to include app.listen() in this file
