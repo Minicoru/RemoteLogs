@@ -10,17 +10,17 @@ const fs = require("fs");
 
 // Custom CORS options
 const corsOptions = {
-  origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com',
+  origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type',
   credentials: true,
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 // Middlewares implemented to Express
-router.use(express.json());
-router.options('/log', cors(corsOptions)); // Enable preflight request for /log route
-router.options('/download-logs', cors(corsOptions)); // Enable preflight request for /download-logs route
-router.use(cors(corsOptions)); // Apply CORS to all other requests
+app.use(express.json());
+app.options('/log', cors(corsOptions)); // Enable preflight request for /log route
+app.options('/download-logs', cors(corsOptions)); // Enable preflight request for /download-logs route
+app.use(cors(corsOptions)); // Apply CORS to all other requests
 
 // Define all your routes here, e.g., app.post('/log', ...)
 // Make sure not to include app.listen() in this file
