@@ -8,20 +8,6 @@ const pool = require('./database'); // Adjusted for PostgreSQL connection
 const cors = require("cors");
 const fs = require("fs");
 
-// Custom CORS options
-const corsOptions = {
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type',
-  credentials: true,
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-// Middlewares implemented to Express
-app.use(express.json());
-app.options('/log', cors(corsOptions)); // Enable preflight request for /log route
-app.options('/download-logs', cors(corsOptions)); // Enable preflight request for /download-logs route
-app.use(cors(corsOptions)); // Apply CORS to all other requests
-
 // Define all your routes here, e.g., app.post('/log', ...)
 // Make sure not to include app.listen() in this file
 // Modified POST route to save logs to the database
@@ -153,5 +139,19 @@ router.get('/', (req, res) => {
 });
 
 app.use(router);
+// Custom CORS options
+const corsOptions = {
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type',
+  credentials: true,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+// Middlewares implemented to Express
+app.use(express.json());
+app.options('/log', cors(corsOptions)); // Enable preflight request for /log route
+app.options('/download-logs', cors(corsOptions)); // Enable preflight request for /download-logs route
+app.use(cors(corsOptions)); // Apply CORS to all other requests
+
 
 module.exports = { app: app, pool: pool }; // Export the app for use in other files
