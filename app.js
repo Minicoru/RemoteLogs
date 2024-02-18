@@ -143,13 +143,13 @@ app.get('/', (req, res) => {
 const corsOptions = {
   origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type',
+  allowedHeaders: '*',
   credentials: true,
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 // Middlewares implemented to Express
 app.use(express.json());
-app.options('*', cors(corsOptions)); // Enable preflight request for /log routedownload-logs route
+// app.options('*', cors(corsOptions)); // Enable preflight request for /log routedownload-logs route
 app.use(cors(corsOptions)); // Apply CORS to all other requests
 
 
