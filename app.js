@@ -40,7 +40,7 @@ app.use(cors()); // Apply CORS to all other requests
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
 app.options('/log', cors());
-router.post('/log', cors(), async (req, res) => {
+app.post('/log', cors(), async (req, res) => {
   const { log, project, userdata, username, env } = req.body;
   const query = `INSERT INTO log_entries (log, project, userdata, username, env_instance) VALUES ($1, $2, $3, $4, $5)`;
 
