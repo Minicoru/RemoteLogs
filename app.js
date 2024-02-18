@@ -37,7 +37,7 @@ var corsOptionsDelegate = function (req, callback) {
 
 // Middlewares implemented to Express
 app.use(express.json());
-// app.options('*', cors({
+//
 // origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', // Client-side domain
 // })); // Enable preflight request for /log routedownload-logs route
 app.use(cors(corsOptionsDelegate)); // Apply CORS to all other requests
@@ -60,8 +60,7 @@ app.use(cors(corsOptionsDelegate)); // Apply CORS to all other requests
 //    });
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
-app.options('/log', cors(corsOptionsDelegate));
-app.post('/log', cors(corsOptionsDelegate), async (req, res) => {
+app.post('/log', cors(corsOptionsDelegate), async (req, res, next) => {
   const { log, project, userdata, username, env } = req.body;
   const query = `INSERT INTO log_entries (log, project, userdata, username, env_instance) VALUES ($1, $2, $3, $4, $5)`;
 
@@ -112,8 +111,7 @@ app.post('/log', cors(corsOptionsDelegate), async (req, res) => {
 //    });
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
-app.options('/download-logs', cors(corsOptionsDelegate));
-app.get('/download-logs', cors(corsOptionsDelegate), async (req, res) => {
+app.get('/download-logs', cors(corsOptionsDelegate), async (req, res, next) => {
   let query = `SELECT * FROM log_entries`;
   const params = [];
   let conditions = [];
@@ -169,7 +167,6 @@ app.get('/download-logs', cors(corsOptionsDelegate), async (req, res) => {
 //    });
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
-app.options('/', cors(corsOptionsDelegate));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/layouts/static/home.html'); // Make sure the path matches where your HTML file is located
 });
