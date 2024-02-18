@@ -23,12 +23,24 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
+
+var whitelist = ['https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', 'https://flpnwc-hd428f378.dispatcher.us3.hana.ondemand.com/sites?siteId=298a1172-5521-4a7f-afdb-58bdce55d3dd#pitslg_bodega-Display', 'https://flpnwc-zd7h928i3o.dispatcher.us3.hana.ondemand.com/sites?siteId=8b4cb1be-4164-4801-8bcb-a116d90d5e21#pitslg_bodega-Display']
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
 // Middlewares implemented to Express
 app.use(express.json());
 // app.options('*', cors({
 // origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', // Client-side domain
 // })); // Enable preflight request for /log routedownload-logs route
-app.use(cors(corsOptions)); // Apply CORS to all other requests
+app.use(cors(corsOptionsDelegate)); // Apply CORS to all other requests
 
 // Define all your routes here, e.g., app.post('/log', ...)
 // Make sure not to include app.listen() in this file
@@ -48,8 +60,8 @@ app.use(cors(corsOptions)); // Apply CORS to all other requests
 //    });
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
-app.options('/log', cors(corsOptions));
-app.post('/log', cors(corsOptions), async (req, res) => {
+app.options('/log', cors(corsOptionsDelegate));
+app.post('/log', cors(corsOptionsDelegate), async (req, res) => {
   const { log, project, userdata, username, env } = req.body;
   const query = `INSERT INTO log_entries (log, project, userdata, username, env_instance) VALUES ($1, $2, $3, $4, $5)`;
 
@@ -100,8 +112,8 @@ app.post('/log', cors(corsOptions), async (req, res) => {
 //    });
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
-app.options('/download-logs', cors(corsOptions));
-app.get('/download-logs', cors(corsOptions), async (req, res) => {
+app.options('/download-logs', cors(corsOptionsDelegate));
+app.get('/download-logs', cors(corsOptionsDelegate), async (req, res) => {
   let query = `SELECT * FROM log_entries`;
   const params = [];
   let conditions = [];
@@ -157,7 +169,7 @@ app.get('/download-logs', cors(corsOptions), async (req, res) => {
 //    });
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
-app.options('/', cors(corsOptions));
+app.options('/', cors(corsOptionsDelegate));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/layouts/static/home.html'); // Make sure the path matches where your HTML file is located
 });
