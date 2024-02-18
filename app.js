@@ -40,7 +40,7 @@ app.use(cors(corsOptions)); // Apply CORS to all other requests
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
 app.options('/log', cors(corsOptions));
-router.post('/log', async (req, res) => {
+router.post('/log', cors(corsOptions), async (req, res) => {
   const { log, project, userdata, username, env } = req.body;
   const query = `INSERT INTO log_entries (log, project, userdata, username, env_instance) VALUES ($1, $2, $3, $4, $5)`;
 
@@ -92,7 +92,7 @@ router.post('/log', async (req, res) => {
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
 app.options('/download-logs', cors(corsOptions));
-app.get('/download-logs', async (req, res) => {
+app.get('/download-logs', cors(corsOptions), async (req, res) => {
   let query = `SELECT * FROM log_entries`;
   const params = [];
   let conditions = [];
