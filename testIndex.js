@@ -34,6 +34,33 @@ fetch('https://remote-logs-54f31522b54750203a82019006ac7529.vercel.app/log', {
     "project": "TEST"
   })
 })
-  .then(response => response.json())
+  .then(response => {
+    let content = response.text();
+    try {
+      content = JSON.parse(content);
+    } catch (error) {
+      //console.log(error);
+    };
+    return content;
+  })
+  .then(data => console.log(data))
+  .catch((error) => console.error('Error:', error));
+
+fetch('https://remote-logs-54f31522b54750203a82019006ac7529.vercel.app/download-logs?project=TEST', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    // Add any other headers your service requires
+  }
+})
+  .then(response => {
+    let content = response.text();
+    try {
+      content = JSON.parse(content);
+    } catch (error) {
+      //console.log(error);
+    };
+    return content;
+  })
   .then(data => console.log(data))
   .catch((error) => console.error('Error:', error));
