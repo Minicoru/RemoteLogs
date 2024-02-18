@@ -19,10 +19,10 @@ const corsOptions = {
 // Middlewares implemented to Express
 app.use(express.json());
 // app.options('*', cors({
-  // origin: '*', // Client-side domain
+  // origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', // Client-side domain
 // })); // Enable preflight request for /log routedownload-logs route
 app.use(cors({
-  origin: '*', // Client-side domain
+  origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', // Client-side domain
 })); // Apply CORS to all other requests
 
 // Define all your routes here, e.g., app.post('/log', ...)
@@ -44,10 +44,10 @@ app.use(cors({
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
 app.options('/log', cors({
-  origin: '*', // Client-side domain
+  origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', // Client-side domain
 }));
 app.post('/log', cors({
-  origin: '*', // Client-side domain
+  origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', // Client-side domain
 }), async (req, res) => {
   const { log, project, userdata, username, env } = req.body;
   const query = `INSERT INTO log_entries (log, project, userdata, username, env_instance) VALUES ($1, $2, $3, $4, $5)`;
@@ -100,10 +100,10 @@ app.post('/log', cors({
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
 app.options('/download-logs', cors({
-  origin: '*', // Client-side domain
+  origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', // Client-side domain
 }));
 app.get('/download-logs', cors({
-  origin: '*', // Client-side domain
+  origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', // Client-side domain
 }), async (req, res) => {
   let query = `SELECT * FROM log_entries`;
   const params = [];
@@ -161,7 +161,7 @@ app.get('/download-logs', cors({
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
 app.options('/', cors({
-  origin: '*', // Client-side domain
+  origin: 'https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', // Client-side domain
 }));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/layouts/static/home.html'); // Make sure the path matches where your HTML file is located
