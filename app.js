@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+// const router = express.Router();
 const app = express();
 // const db = require('./database'); // Ensure you have this file set up for database operations
 const pool = require('./database'); // Adjusted for PostgreSQL connection
@@ -77,7 +77,7 @@ router.post('/log', async (req, res) => {
 //    });
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
-router.get('/download-logs', async (req, res) => {
+app.get('/download-logs', async (req, res) => {
   let query = `SELECT * FROM log_entries`;
   const params = [];
   let conditions = [];
@@ -134,11 +134,11 @@ router.get('/download-logs', async (req, res) => {
 // });
 // This was before to change to PostgreSQL Database on Vercel -B1 -13/feb/24
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/layouts/static/home.html'); // Make sure the path matches where your HTML file is located
 });
 
-app.use(router);
+// app.use(router);
 // Custom CORS options
 const corsOptions = {
   origin: '*',
@@ -149,8 +149,7 @@ const corsOptions = {
 };
 // Middlewares implemented to Express
 app.use(express.json());
-app.options('/log', cors(corsOptions)); // Enable preflight request for /log route
-app.options('/download-logs', cors(corsOptions)); // Enable preflight request for /download-logs route
+app.options('*', cors(corsOptions)); // Enable preflight request for /log routedownload-logs route
 app.use(cors(corsOptions)); // Apply CORS to all other requests
 
 
