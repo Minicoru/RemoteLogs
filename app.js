@@ -24,7 +24,7 @@ const corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-var whitelist = ['https://webidetesting5468852-hd428f378.dispatcher.us3.hana.ondemand.com', 'https://flpnwc-hd428f378.dispatcher.us3.hana.ondemand.com/sites?siteId=298a1172-5521-4a7f-afdb-58bdce55d3dd#pitslg_bodega-Display', 'https://flpnwc-zd7h928i3o.dispatcher.us3.hana.ondemand.com/sites?siteId=8b4cb1be-4164-4801-8bcb-a116d90d5e21#pitslg_bodega-Display']
+var whitelist = ['*']
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
